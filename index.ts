@@ -1,7 +1,7 @@
 import {CreateEvent, PushEvent, User, WebhookEvent} from "npm:@octokit/webhooks-types@^6.7.0";
 import {serve} from "https://deno.land/std@0.157.0/http/server.ts";
 
-const port = Deno.env.get("PORT") || 1337;
+const port = parseInt(Deno.env.get("PORT") || "1337");
 const target = Deno.env.get("TARGET") || "http://localhost:1337/mock-target";
 
 const handler = async (request: Request): Promise<Response> => {
