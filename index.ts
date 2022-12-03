@@ -47,7 +47,7 @@ async function forward(request: Request, target: string, event: WebhookEvent): P
             "content-type": "application/json",
         };
         // forward headers
-        for (const [key, value] of Object.entries(request.headers)) {
+        for (const [key, value] of request.headers.entries()) {
             if (
                 typeof value === "string" &&
                 (key.includes("github") ||
@@ -65,7 +65,7 @@ async function forward(request: Request, target: string, event: WebhookEvent): P
         });
 
         if (result.ok) {
-            console.log("✅ Forwarded");
+            console.log("✅ Forwarded (status:", result.status, "response:", await result.text(), ")");
             return new Response("Forwarded");
         }
         console.error("❌ Failed to forward:", result.status);
