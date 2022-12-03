@@ -1,5 +1,5 @@
 ### reject: renovate force push
-POST http://localhost:1337
+POST {{host}}
 content-type: application/json
 X-GitHub-Event: push
 
@@ -237,7 +237,7 @@ X-GitHub-Event: push
 }) %}
 
 ### forward: minidigger push
-POST http://localhost:1337
+POST {{host}}
 content-type: application/json
 X-GitHub-Event: push
 
@@ -469,7 +469,7 @@ X-GitHub-Event: push
 }) %}
 
 ### forward: pull request opened
-POST http://localhost:1337
+POST {{host}}
 content-type: application/json
 X-GitHub-Event: pull_request
 
@@ -1034,7 +1034,7 @@ X-GitHub-Event: pull_request
 }) %}
 
 ### reject: renovate branch creation
-POST http://localhost:1337
+POST {{host}}
 content-type: application/json
 X-GitHub-Event: create
 

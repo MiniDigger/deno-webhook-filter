@@ -4,10 +4,11 @@ import {serve} from "https://deno.land/std@0.157.0/http/server.ts";
 const port = parseInt(Deno.env.get("PORT") || "1337");
 const target = Deno.env.get("TARGET") || "http://localhost:1337/mock-target";
 
+const redirect = new Response(null, {status: 301, headers: {location: "https://github.com/MiniDigger/deno-webhook-filter"}})
 const handler = async (request: Request): Promise<Response> => {
     if (request.url === "http://localhost:1337/mock-target") return new Response("Mock");
-    if (request.method !== "POST") return new Response("Not post", {status: 405});
-    if (!request.headers.get("X-GitHub-Event")) return new Response("No github", {status: 400});
+    if (request.method !== "POST") return redirect;
+    if (!request.headers.get("X-GitHub-Event")) return redirect;
     const eventType = request.headers.get("X-GitHub-Event") || "dum";
     const event = await request.json() as WebhookEvent;
 
@@ -20,7 +21,7 @@ const handler = async (request: Request): Promise<Response> => {
         return new Response("Not forwarding: " + response);
     }
 };
-await serve(handler, {port});
+await serve(handler, {port, hostname: "0.0.0.0"});
 
 function shouldForward(eventType: string, event: WebhookEvent): string | null {
     let reason: string | null = null;

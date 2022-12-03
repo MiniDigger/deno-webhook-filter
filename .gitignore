@@ -1,3 +1,4 @@
 .idea
 *.iml
 index.js
+http-client.private.env.json
